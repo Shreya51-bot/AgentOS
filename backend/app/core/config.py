@@ -3,6 +3,10 @@ from typing import List, Union
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Resolve the absolute path to the backend/.env file
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+env_file_path = os.path.join(base_dir, ".env")
+
 class Settings(BaseSettings):
     PROJECT_NAME: str = "AgentOS"
     API_V1_STR: str = "/api/v1"
@@ -19,7 +23,7 @@ class Settings(BaseSettings):
     # Encryption key for securing refresh tokens (Fernet key format)
     # Generate one using: cryptography.fernet.Fernet.generate_key().decode()
     ENCRYPTION_KEY: str = "zJ6EwY6hV3_aLks7X8vQ3E9fPz-a4S1T5V_mU7p4Wbc=" 
-
+    
     # Google OAuth settings
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_CLIENT_SECRET: str = ""
@@ -36,7 +40,7 @@ class Settings(BaseSettings):
     ]
     
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=env_file_path,
         env_file_encoding="utf-8",
         case_sensitive=True,
         extra="ignore"

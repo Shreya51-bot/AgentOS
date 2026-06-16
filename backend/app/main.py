@@ -19,6 +19,7 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 # Routers mounting
+app.include_router(auth.google_router, tags=["auth"])
 app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
 app.include_router(gmail.router, prefix=f"{settings.API_V1_STR}/gmail", tags=["gmail"])
 app.include_router(calendar.router, prefix=f"{settings.API_V1_STR}/calendar", tags=["calendar"])
